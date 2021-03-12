@@ -1,0 +1,23 @@
+dist: bionic
+sudo: required
+
+language: cpp
+
+os:
+  - linux
+
+compiler:
+  - gcc
+
+script:
+  - mkdir cmake-build
+  - cd cmake-build
+  - cmake ../ -DCLIENT=1
+  - make
+
+notifications:
+  email:
+    recipients:
+      - grib.a@phystech.edu
+    on_success: change
+    on_failure: always
