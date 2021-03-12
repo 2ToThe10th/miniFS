@@ -1,4 +1,7 @@
 # miniFS
+
+[![Build Status](https://travis-ci.com/2ToThe10th/miniFS.svg?branch=master)](https://travis-ci.com/2ToThe10th/miniFS)
+
 write small file system
 
 ```
