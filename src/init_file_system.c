@@ -8,7 +8,8 @@
 
 void InitFileSystem(int filesystem_fd, uint64_t filesystem_size)  {
   if (filesystem_size < BLOCK_SIZE) {
-    fprintf(stderr, "Too small. File might be more than %d bytes", BLOCK_SIZE);
+    printf("Too small. File might be more than %d bytes", BLOCK_SIZE);
+    close(filesystem_fd);
     exit(1);
   }
   printf("Init started\n");
@@ -32,6 +33,6 @@ void InitFileSystem(int filesystem_fd, uint64_t filesystem_size)  {
     }
   }
   lseek(filesystem_fd, (filesystem_size / BLOCK_SIZE - 1) * BLOCK_SIZE, SEEK_SET);
-  uint64_t last_block = UINT64_MAX;
+  uint64_t last_block = PLACE_FINISHED;
   write(filesystem_fd, &last_block, sizeof(last_block));
 }

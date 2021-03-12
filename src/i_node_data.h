@@ -10,7 +10,7 @@
 #define MAX_NAME_SIZE 23
 
 struct INodeData {
-  uint64_t size;
+  uint64_t location;
   char type;
   char name[MAX_NAME_SIZE];
 };

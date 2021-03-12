@@ -40,8 +40,8 @@ void RunCommand(char *input_line, size_t input_line_size, int filesystem_fd);
 
 int main(int argc, char *argv[]) {
   if (argc < 2) {
-    fprintf(stderr, USAGE);
-    fprintf(stderr, COMMANDS);
+    printf(USAGE);
+    printf(COMMANDS);
     exit(1);
   }
   int filesystem_fd = open(argv[1], O_RDWR);
@@ -54,8 +54,8 @@ int main(int argc, char *argv[]) {
   uint64_t filesystem_size = filesystem_stat.st_size;
   if (filesystem_size % BLOCK_SIZE != 0) {
     filesystem_size = (filesystem_size / BLOCK_SIZE) * BLOCK_SIZE;
-    fprintf(stderr, "Will be used only %ld bytes of file\n", filesystem_size);
-    fflush(stderr);
+    printf("Will be used only %ld bytes of file\n", filesystem_size);
+    fflush(stdout);
   }
   if (argc >= 3 && strcmp(argv[2], "init") == 0) {
     InitFileSystem(filesystem_fd, filesystem_size);
@@ -82,14 +82,14 @@ int main(int argc, char *argv[]) {
     printf("miniFS> ");
     fflush(stdout);
   }
+  close(filesystem_fd);
 }
 
-void CreateDirectory(char* directory_path, int filesystem_fd);
-
-uint64_t FindDirectoryToCreate(char* directory_path, int filesystem_fd, char** directory_name);
+void CreateDirectory(char *directory_path, int filesystem_fd);
+void ListDirectory(char *directory_path, int filesystem_fd);
 
 void RunCommand(char *input_line, size_t input_line_size, int filesystem_fd) {
-  char* first_space = strchr(input_line, ' ');
+  char *first_space = strchr(input_line, ' ');
   char command[input_line_size + 1];
   if (first_space == NULL) {
     strcpy(command, input_line);
@@ -104,28 +104,104 @@ void RunCommand(char *input_line, size_t input_line_size, int filesystem_fd) {
   printf("left:|%s|\n", input_line);
   if (strcmp(command, "mkdir") == 0) {
     CreateDirectory(input_line, filesystem_fd);
+  } else if (strcmp(command, "ls") == 0) {
+    ListDirectory(input_line, filesystem_fd);
   } else {
-    fprintf(stderr, "No such command");
-    fflush(stderr);
+    printf("No such command\n");
   }
 }
 
+uint64_t FindDirectoryToCreate(char *directory_path, int filesystem_fd, char **directory_name);
+int AddInfoAboutNewNode(uint64_t i_node_new_place, char *directory_name, struct INode *current_node);
+
 void CreateDirectory(char *directory_path, int filesystem_fd) {
-  char* directory_name = NULL;
-  uint64_t directory_place = FindDirectoryToCreate(directory_path, filesystem_fd, &directory_name);
-  printf("|%s|", directory_name);
-  printf("|%ld|", directory_place);
+  char *directory_name = NULL;
+  uint64_t directory_offset = FindDirectoryToCreate(directory_path, filesystem_fd, &directory_name);
+  if (directory_offset == 0) {
+    return;
+  }
+  if (strlen(directory_name) > MAX_NAME_SIZE) {
+    printf("Too big dir name\n");
+    return;
+  }
+  if (FindInDirectory(directory_name, filesystem_fd, directory_offset, NULL) == 0) {
+    printf("File already exist\n");
+    return;
+  }
+  uint64_t new_i_node_place = CreateEmptyINode(filesystem_fd);
+  struct INode current_node;
+  lseek(filesystem_fd, directory_offset, SEEK_SET);
+  read(filesystem_fd, &current_node, sizeof(current_node));
+  if (AddInfoAboutNewNode(new_i_node_place, directory_name, &current_node)) {
+    lseek(filesystem_fd, directory_offset, SEEK_SET);
+    write(filesystem_fd, &current_node, sizeof(current_node));
+    return;
+  }
+  while (current_node.next_inode != 0) {
+    uint64_t current_i_node_place = current_node.next_inode;
+    lseek(filesystem_fd, current_i_node_place, SEEK_SET);
+    read(filesystem_fd, &current_node, sizeof(current_node));
+    if (AddInfoAboutNewNode(new_i_node_place, directory_name, &current_node)) {
+      lseek(filesystem_fd, current_i_node_place, SEEK_SET);
+      write(filesystem_fd, &current_node, sizeof(current_node));
+      return;
+    }
+  }
+  // TODO:
 }
 
-uint64_t FindDirectoryToCreate(char *directory_path, int filesystem_fd, char** directory_name) {
+int AddInfoAboutNewNode(uint64_t i_node_new_place, char *directory_name, struct INode *current_node) {
+  for (int i = 0; i < I_NODE_FILES_NUMBER; ++i) {
+    if (current_node->files[i].location == 0) {
+      current_node->files[i].location = i_node_new_place;
+      current_node->files[i].type = 'd';
+      char file_name[MAX_NAME_SIZE + 1];
+      memset(file_name, 0, MAX_NAME_SIZE + 1);
+      strcpy(file_name, directory_name);
+      memcpy(current_node->files[i].name, file_name, MAX_NAME_SIZE);
+      return 1;
+    }
+  }
+  return 0;
+}
+
+void ListINode(struct INode *i_node);
+
+void ListDirectory(char *directory_path, int filesystem_fd) {
+  uint64_t directory_offset = ParsePath(directory_path, filesystem_fd);
+  printf("%ld\n", directory_offset);
+  if (directory_offset != 0) {
+    struct INode current_node;
+    lseek(filesystem_fd, directory_offset, SEEK_SET);
+    read(filesystem_fd, &current_node, sizeof(current_node));
+    ListINode(&current_node);
+    while (current_node.next_inode != 0) {
+      lseek(filesystem_fd, current_node.next_inode, SEEK_SET);
+      read(filesystem_fd, &current_node, sizeof(current_node));
+      ListINode(&current_node);
+    }
+  }
+}
+
+void ListINode(struct INode *i_node) {
+  for (int i = 0; i < I_NODE_FILES_NUMBER; ++i) {
+    if (i_node->files[i].location != 0) {
+      char file_name[24];
+      file_name[MAX_NAME_SIZE] = '\0';
+      memcpy(file_name, i_node->files[i].name, MAX_NAME_SIZE);
+      printf("%s\n", file_name);
+    }
+  }
+}
+
+uint64_t FindDirectoryToCreate(char *directory_path, int filesystem_fd, char **directory_name) {
   size_t directory_path_size = strlen(directory_path);
   if (directory_path[directory_path_size - 1] == '/') {
     directory_path[directory_path_size - 1] = '\0';
     --directory_path_size;
   }
   if (directory_path_size == 0) {
-    fprintf(stderr, "Please write directory name");
-    fflush(stderr);
+    printf("Please write directory name\n");
     return 0;
   }
   *directory_name = directory_path;
@@ -135,12 +211,13 @@ uint64_t FindDirectoryToCreate(char *directory_path, int filesystem_fd, char** d
     }
   }
   if (strlen(*directory_name) == 0) {
-    fprintf(stderr, "Empty directory name");
-    fflush(stderr);
+    printf("Empty directory name\n");
     return 0;
   }
   if (*directory_name != directory_path) {
     *(*directory_name - 1) = '\0';
+    return ParsePath(directory_path, filesystem_fd);
+  } else {
+    return BLOCK_SIZE;
   }
-  return ParsePath(directory_path, filesystem_fd);
 }

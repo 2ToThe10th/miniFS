@@ -24,6 +24,6 @@ write FD text - write data to file from place in FD. text cant contain \n. Retur
 writeln FD text - as write, but add \n in the end
 seek FD new_place - change FD place to new_place. new_place might be less than size of file
 stat file_name - size of file_name
-statfd FD - stat of file in FD
+statfd FD - size of file in FD
 close FD - close file descriptor (need to delete files)
 ```

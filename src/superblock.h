@@ -7,10 +7,14 @@
 
 #include <stdint.h>
 
+#define PLACE_FINISHED UINT64_MAX
+
 struct SuperBlock {
   uint64_t first_empty_block;
 };
 
 void SuperBlockInit(struct SuperBlock* super_block);
+
+void UpdateSuperBlock(struct SuperBlock* super_block, int filesystem_fd);
 
 #endif //MINIFS_SRC_SUPERBLOCK_H_
