@@ -5,6 +5,7 @@
 #include <string.h>
 #include "init_file_system.h"
 #include "i_node.h"
+
 void InitFileSystem(int filesystem_fd, uint64_t filesystem_size)  {
   if (filesystem_size < BLOCK_SIZE) {
     fprintf(stderr, "Too small. File might be more than %d bytes", BLOCK_SIZE);

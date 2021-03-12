@@ -7,10 +7,12 @@
 
 #include <stdint.h>
 
+#define MAX_NAME_SIZE 23
+
 struct INodeData {
   uint64_t size;
   char type;
-  char name[23];
+  char name[MAX_NAME_SIZE];
 };
 
 #endif //MINIFS_SRC_I_NODE_DATA_H_

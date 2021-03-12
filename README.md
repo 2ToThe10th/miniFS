@@ -11,7 +11,8 @@ So first time or to rewrite a file you need to write:
 ./miniFS file_name init
 And then just:
 ./miniFS file_name
-Commands:mkdir dir_name - create a directory (for dir1/dir2/dir3 dir1/dir2 must exist and dir3 must not exist)
+Commands:
+mkdir dir_name - create a directory (for dir1/dir2/dir3 dir1/dir2 must exist and dir3 must not exist)
 rmdir dir_name - remove directory (directory must be empty and must exist)
 ls dir_name - watch files and dirs in directory
 touch file_name - create file (for dir1/dir2/file1 dir1/dir2 must exist and file1 must not exist)
