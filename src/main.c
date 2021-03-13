@@ -11,6 +11,7 @@
 #include "i_node.h"
 #include "parse_path.h"
 #include "util.h"
+#include "file.h"
 
 const char USAGE[] = "Usage:\n"
                      "./miniFS <name of file (better to be multiple of 4096, otherwise file_size %% 4096 will be unused)> [init]\n"
@@ -24,7 +25,6 @@ const char COMMANDS[] = "Commands:\n"
                         "ls dir_name - watch files and dirs in directory\n"
                         "touch file_name - create file (for dir1/dir2/file1 dir1/dir2 must exist and file1 must not exist)\n"
                         "open file_name - return file descriptor of open file\n"
-                        "close FD - close file descriptor\n"
                         "rm file_name - delete file with file_name (file must not have open file descriptors)\n"
                         "read FD number_of_bytes - read number_of_bytes from place set in file descriptor (0 - EOF). "
                         "Return number_of_read bytes and text\n"
@@ -36,16 +36,15 @@ const char COMMANDS[] = "Commands:\n"
                         "close FD - close file descriptor (need to delete files)\n";
 
 void RunCommand(char *input_line, size_t input_line_size, int filesystem_fd);
-void CreateDirectory(char *directory_path, int filesystem_fd);
+void CreateNewFile(char *path, int filesystem_fd, char file_type);
 void ListDirectory(char *directory_path, int filesystem_fd);
-void RemoveDirectory(char *directory_path, int filesystem_fd);
+void RemoveFileCommand(char *path, int filesystem_fd, char file_type);
 uint64_t FindParentDirectoryAndName(char *directory_path, int filesystem_fd, char **name);
 int AddInfoAboutNewFile(uint64_t i_node_new_place, char *name, char type, struct INode *current_node);
 void ListINode(struct INode *i_node);
 int CheckIfEmptyDirectory(int filesystem_fd, uint64_t directory_offset);
 void ClearEmptyDirectory(int filesystem_fd, uint64_t directory_offset);
 int IsNodeEmpty(struct INode *i_node);
-uint64_t CreateInodeWithOneFile(int filesystem_fd, uint64_t file_location, char file_type, char *file_name);
 
 int main(int argc, char *argv[]) {
   if (argc < 2) {
@@ -91,6 +90,9 @@ int main(int argc, char *argv[]) {
     printf("miniFS> ");
     fflush(stdout);
   }
+  if (input_line != NULL) {
+    free(input_line);
+  }
   close(filesystem_fd);
 }
 
@@ -109,20 +111,23 @@ void RunCommand(char *input_line, size_t input_line_size, int filesystem_fd) {
   printf("Command:|%s|\n", command);
   printf("left:|%s|\n", input_line);
   if (strcmp(command, "mkdir") == 0) {
-    CreateDirectory(input_line, filesystem_fd);
+    CreateNewFile(input_line, filesystem_fd, 'd');
   } else if (strcmp(command, "ls") == 0) {
     ListDirectory(input_line, filesystem_fd);
   } else if (strcmp(command, "rmdir") == 0) {
-    RemoveDirectory(input_line, filesystem_fd);
+    RemoveFileCommand(input_line, filesystem_fd, 'd');
+  } else if (strcmp(command, "touch") == 0) {
+    CreateNewFile(input_line, filesystem_fd, 'f');
+  } else if (strcmp(command, "rm") == 0) {
+    RemoveFileCommand(input_line, filesystem_fd, 'f');
   } else {
     printf("No such command\n");
   }
 }
 
-void CreateDirectory(char *directory_path, int filesystem_fd) {
+void CreateNewFile(char *path, int filesystem_fd, char file_type) {
   char *directory_name = NULL;
-  char new_file_type = 'd';
-  uint64_t directory_offset = FindParentDirectoryAndName(directory_path, filesystem_fd, &directory_name);
+  uint64_t directory_offset = FindParentDirectoryAndName(path, filesystem_fd, &directory_name);
   if (directory_offset == 0) {
     return;
   }
@@ -134,13 +139,21 @@ void CreateDirectory(char *directory_path, int filesystem_fd) {
     printf("File already exist\n");
     return;
   }
-  uint64_t new_i_node_place = CreateEmptyINode(filesystem_fd);
+  uint64_t new_file_location;
+  if (file_type == 'd') {
+    new_file_location = CreateEmptyINode(filesystem_fd);
+  } else if (file_type == 'f') {
+    new_file_location = CreateEmptyFile(filesystem_fd);
+  } else {
+    printf("Unknown format of file\nPlease write developer about it\n");
+    return;
+  }
   uint64_t current_i_node_place = directory_offset;
   uint64_t last_i_node_offset = 0;
   struct INode current_node;
   while (current_i_node_place != 0) {
     read_from_filesystem(filesystem_fd, current_i_node_place, &current_node, sizeof(current_node));
-    if (AddInfoAboutNewFile(new_i_node_place, directory_name, new_file_type, &current_node)) {
+    if (AddInfoAboutNewFile(new_file_location, directory_name, file_type, &current_node)) {
       write_to_filesystem(filesystem_fd, current_i_node_place, &current_node, sizeof(current_node));
       return;
     }
@@ -155,7 +168,7 @@ void CreateDirectory(char *directory_path, int filesystem_fd) {
   write_to_filesystem(filesystem_fd, last_i_node_offset, &current_node, sizeof(current_node));
 
   read_from_filesystem(filesystem_fd, new_directory_i_node_location, &current_node, sizeof(current_node));
-  AddInfoAboutNewFile(new_i_node_place, directory_name, new_file_type, &current_node);
+  AddInfoAboutNewFile(new_file_location, directory_name, file_type, &current_node);
   write_to_filesystem(filesystem_fd, new_directory_i_node_location, &current_node, sizeof(current_node));
 }
 
@@ -172,10 +185,6 @@ int AddInfoAboutNewFile(uint64_t i_node_new_place, char *name, char type, struct
     }
   }
   return 0;
-}
-
-uint64_t CreateInodeWithOneFile(int filesystem_fd, uint64_t file_location, char file_type, char *file_name) {
-
 }
 
 void ListDirectory(char *directory_path, int filesystem_fd) {
@@ -200,32 +209,46 @@ void ListINode(struct INode *i_node) {
       char file_name[24];
       file_name[MAX_NAME_SIZE] = '\0';
       memcpy(file_name, i_node->files[i].name, MAX_NAME_SIZE);
-      printf("%c    | %s\n", i_node->files->type, file_name);
+      printf("%c    | %s\n", i_node->files[i].type, file_name);
     }
   }
 }
 
-void RemoveDirectory(char *directory_path, int filesystem_fd) {
-  char *directory_name = NULL;
-  uint64_t parent_directory_offset = FindParentDirectoryAndName(directory_path, filesystem_fd, &directory_name);
+void RemoveFileCommand(char *path, int filesystem_fd, char file_type) {
+  char *new_file_name = NULL;
+  uint64_t parent_directory_offset = FindParentDirectoryAndName(path, filesystem_fd, &new_file_name);
   if (parent_directory_offset == 0) {
     return;
   }
   struct INodeData i_node_data;
   uint64_t directory_info_offset;
-  if (FindInDirectory(directory_name, filesystem_fd, parent_directory_offset, &i_node_data, &directory_info_offset)
+  if (FindInDirectory(new_file_name, filesystem_fd, parent_directory_offset, &i_node_data, &directory_info_offset)
       == -1) {
     printf("File dont exist\n");
     return;
   }
-  if (CheckIfEmptyDirectory(filesystem_fd, i_node_data.location) == 0) {
-    printf("Not empty\n");
+  if (i_node_data.type != file_type) {
+    printf("Incorrect file_type of removed %c, might be %c\n", i_node_data.type, file_type);
     return;
   }
-  char zero_i_node[sizeof(struct INodeData)];
-  memset(zero_i_node, 0, sizeof(struct INodeData));
-  write_to_filesystem(filesystem_fd, directory_info_offset, zero_i_node, sizeof(struct INodeData));
-  ClearEmptyDirectory(filesystem_fd, i_node_data.location);
+  if (file_type == 'd') {
+    if (CheckIfEmptyDirectory(filesystem_fd, i_node_data.location) == 0) {
+      printf("Not empty\n");
+      return;
+    }
+    char zero_i_node[sizeof(struct INodeData)];
+    memset(zero_i_node, 0, sizeof(struct INodeData));
+    write_to_filesystem(filesystem_fd, directory_info_offset, zero_i_node, sizeof(struct INodeData));
+    ClearEmptyDirectory(filesystem_fd, i_node_data.location);
+  } else if (file_type == 'f') {
+    RemoveFile(filesystem_fd, i_node_data.location);
+    char zero_i_node[sizeof(struct INodeData)];
+    memset(zero_i_node, 0, sizeof(struct INodeData));
+    write_to_filesystem(filesystem_fd, directory_info_offset, zero_i_node, sizeof(struct INodeData));
+  } else {
+    printf("Unknown format of file\nPlease write developer about it\n");
+    return;
+  }
 }
 
 uint64_t FindParentDirectoryAndName(char *directory_path, int filesystem_fd, char **name) {

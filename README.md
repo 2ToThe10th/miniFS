@@ -17,7 +17,6 @@ rmdir dir_name - remove directory (directory must be empty and must exist)
 ls dir_name - watch files and dirs in directory
 touch file_name - create file (for dir1/dir2/file1 dir1/dir2 must exist and file1 must not exist)
 open file_name - return file descriptor of open file
-close FD - close file descriptor
 rm file_name - delete file with file_name (file must not have open file descriptors)
 read FD number_of_bytes - read number_of_bytes from place set in file descriptor (0 - EOF). Return number_of_read bytes and text
 write FD text - write data to file from place in FD. text cant contain \n. Return number of written bytes

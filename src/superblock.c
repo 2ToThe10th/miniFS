@@ -2,6 +2,7 @@
 // Created by 2ToThe10th on 12.03.2021.
 //
 
+#include <stdio.h>
 #include "superblock.h"
 #include "constants.h"
 #include "util.h"
@@ -28,6 +29,10 @@ uint64_t Alloc(int filesystem_fd) {
 }
 
 void Free(int filesystem_fd, uint64_t free_block_offset) {
+  if (free_block_offset == 0) {
+    printf("Cant delete zero address\n");
+    return;
+  }
   struct SuperBlock super_block;
   read_from_filesystem(filesystem_fd, 0, &super_block, sizeof(super_block));
 
