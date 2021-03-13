@@ -15,6 +15,8 @@ struct SuperBlock {
 
 void SuperBlockInit(struct SuperBlock* super_block);
 
-void UpdateSuperBlock(struct SuperBlock* super_block, int filesystem_fd);
+uint64_t Alloc(int filesystem_fd);
+
+void Free(int filesystem_fd, uint64_t free_block_offset);
 
 #endif //MINIFS_SRC_SUPERBLOCK_H_

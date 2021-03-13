@@ -16,15 +16,19 @@
  */
 uint64_t ParsePath(char *path, int filesystem_fd);
 
-
 /**
  *
  * @param name
  * @param filesystem_fd
  * @param directory_offset
- * @param return_info
+ * @param return_info - return block i_node_data
+ * @param offset - offset of block with i_node_data
  * @return 0 if exist, -1 if dont
  */
-int FindInDirectory(char *name, int filesystem_fd, uint64_t directory_offset, struct INodeData *return_info);
+int FindInDirectory(char *name,
+                    int filesystem_fd,
+                    uint64_t directory_offset,
+                    struct INodeData *return_info,
+                    uint64_t *offset);
 
 #endif //MINIFS_SRC_PARSE_PATH_H_
