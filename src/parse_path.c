@@ -4,12 +4,11 @@
 
 #include <string.h>
 #include <stdio.h>
-#include <unistd.h>
 #include "parse_path.h"
 #include "constants.h"
 #include "util.h"
 
-uint64_t ParsePath(char *path, int filesystem_fd) {
+uint64_t ParsePath(char *path, int filesystem_fd, char* type) {
   uint64_t offset = BLOCK_SIZE;
   char *path_end = path + strlen(path);
   for (char *i = path; i < path_end; ++i) {
@@ -18,25 +17,48 @@ uint64_t ParsePath(char *path, int filesystem_fd) {
     }
   }
   char *current_position_in_path = path;
+  *type = 'd';
   while (current_position_in_path < path_end) {
     if (strlen(current_position_in_path) == 0) {
       ++current_position_in_path;
       continue;
     }
+    if (*type != 'd') {
+      printf("found file type f, expected type: d\n");
+      return 0;
+    }
     struct INodeData i_node_data;
     int result = FindInDirectory(current_position_in_path, filesystem_fd, offset, &i_node_data, NULL);
     if (result == -1) {
-      printf("No such directory: %s\n", current_position_in_path);
-      return 0;
-    }
-    if (i_node_data.type != 'd') {
-      printf("It is a file: %s\n", current_position_in_path);
+      printf("No such file: %s\n", current_position_in_path);
       return 0;
     }
     offset = i_node_data.location;
+    *type = i_node_data.type;
     current_position_in_path += strlen(current_position_in_path) + 1;
   }
   return offset;
+}
+
+uint64_t ParsePathCheckTypeWrapper(char *path, int filesystem_fd, char expected_type) {
+  char type;
+  uint64_t offset = ParsePath(path, filesystem_fd, &type);
+  if (offset == 0) {
+    return 0;
+  }
+  if (type != expected_type) {
+    printf("found file type %c, expected type: %c\n", type, expected_type);
+    return 0;
+  }
+  return offset;
+}
+
+uint64_t ParsePathToDirectory(char *directory_path, int filesystem_fd) {
+  return ParsePathCheckTypeWrapper(directory_path, filesystem_fd, 'd');
+}
+
+uint64_t ParsePathToFile(char *file_path, int filesystem_fd) {
+  return ParsePathCheckTypeWrapper(file_path, filesystem_fd, 'f');
 }
 
 /**

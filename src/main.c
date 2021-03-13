@@ -12,6 +12,7 @@
 #include "parse_path.h"
 #include "util.h"
 #include "file.h"
+#include "file_descriptor.h"
 
 const char USAGE[] = "Usage:\n"
                      "./miniFS <name of file (better to be multiple of 4096, otherwise file_size %% 4096 will be unused)> [init]\n"
@@ -30,12 +31,15 @@ const char COMMANDS[] = "Commands:\n"
                         "Return number_of_read bytes and text\n"
                         "write FD text - write data to file from place in FD. text cant contain \\n. Return number of written bytes\n"
                         "writeln FD text - as write, but add \\n in the end\n"
-                        "seek FD new_place - change FD place to new_place. new_place might be less than size of file\n"
+                        "seek FD new_place - change FD place to new_place. new_place might be not more than size of file (size of file use to write in the end)\n"
                         "stat file_name - size of file_name\n"
                         "statfd FD - stat of file in FD\n"
                         "close FD - close file descriptor (need to delete files)\n";
 
-void RunCommand(char *input_line, size_t input_line_size, int filesystem_fd);
+void RunCommand(char *input_line,
+                size_t input_line_size,
+                int filesystem_fd,
+                struct FileDescriptor **file_descriptor_list);
 void CreateNewFile(char *path, int filesystem_fd, char file_type);
 void ListDirectory(char *directory_path, int filesystem_fd);
 void RemoveFileCommand(char *path, int filesystem_fd, char file_type);
@@ -45,6 +49,9 @@ void ListINode(struct INode *i_node);
 int CheckIfEmptyDirectory(int filesystem_fd, uint64_t directory_offset);
 void ClearEmptyDirectory(int filesystem_fd, uint64_t directory_offset);
 int IsNodeEmpty(struct INode *i_node);
+void StatFile(char *path, int filesystem_fd);
+void OpenFile(char *path, int filesystem_fd, struct FileDescriptor **list);
+void CloseFD(char *fd, int filesystem_fd, struct FileDescriptor *list);
 
 int main(int argc, char *argv[]) {
   if (argc < 2) {
@@ -74,6 +81,7 @@ int main(int argc, char *argv[]) {
   char *input_line = NULL;
   size_t zero = 0;
   size_t input_line_size;
+  struct FileDescriptor *file_descriptor_list = NULL;
   while ((input_line_size = getline(&input_line, &zero, stdin)) != -1) {
     if (input_line == NULL) {
       perror("Error in getline");
@@ -83,7 +91,7 @@ int main(int argc, char *argv[]) {
       --input_line_size;
       input_line[input_line_size] = '\0';
     }
-    RunCommand(input_line, input_line_size, filesystem_fd);
+    RunCommand(input_line, input_line_size, filesystem_fd, &file_descriptor_list);
     free(input_line);
     input_line = NULL;
     zero = 0;
@@ -93,10 +101,14 @@ int main(int argc, char *argv[]) {
   if (input_line != NULL) {
     free(input_line);
   }
+  ClearListOfFileDescriptor(file_descriptor_list, filesystem_fd);
   close(filesystem_fd);
 }
 
-void RunCommand(char *input_line, size_t input_line_size, int filesystem_fd) {
+void RunCommand(char *input_line,
+                size_t input_line_size,
+                int filesystem_fd,
+                struct FileDescriptor **file_descriptor_list) {
   char *first_space = strchr(input_line, ' ');
   char command[input_line_size + 1];
   if (first_space == NULL) {
@@ -120,6 +132,10 @@ void RunCommand(char *input_line, size_t input_line_size, int filesystem_fd) {
     CreateNewFile(input_line, filesystem_fd, 'f');
   } else if (strcmp(command, "rm") == 0) {
     RemoveFileCommand(input_line, filesystem_fd, 'f');
+  } else if (strcmp(command, "stat") == 0) {
+    StatFile(input_line, filesystem_fd);
+  } else if (strcmp(command, "open") == 0) {
+    OpenFile(input_line, filesystem_fd, file_descriptor_list);
   } else {
     printf("No such command\n");
   }
@@ -188,7 +204,7 @@ int AddInfoAboutNewFile(uint64_t i_node_new_place, char *name, char type, struct
 }
 
 void ListDirectory(char *directory_path, int filesystem_fd) {
-  uint64_t directory_offset = ParsePath(directory_path, filesystem_fd);
+  uint64_t directory_offset = ParsePathToDirectory(directory_path, filesystem_fd);
   printf("%ld\n", directory_offset);  // TODO: delete
   if (directory_offset != 0) {
     printf("type | name\n");
@@ -241,6 +257,12 @@ void RemoveFileCommand(char *path, int filesystem_fd, char file_type) {
     write_to_filesystem(filesystem_fd, directory_info_offset, zero_i_node, sizeof(struct INodeData));
     ClearEmptyDirectory(filesystem_fd, i_node_data.location);
   } else if (file_type == 'f') {
+    struct File file;
+    read_from_filesystem(filesystem_fd, i_node_data.location, &file, sizeof(file));
+    if (file.file_descriptors_number != 0) {
+      printf("Close all file descriptors (%lu) before\n", file.file_descriptors_number);
+      return;
+    }
     RemoveFile(filesystem_fd, i_node_data.location);
     char zero_i_node[sizeof(struct INodeData)];
     memset(zero_i_node, 0, sizeof(struct INodeData));
@@ -273,7 +295,7 @@ uint64_t FindParentDirectoryAndName(char *directory_path, int filesystem_fd, cha
   }
   if (*name != directory_path) {
     *(*name - 1) = '\0';
-    return ParsePath(directory_path, filesystem_fd);
+    return ParsePathToDirectory(directory_path, filesystem_fd);
   } else {
     return BLOCK_SIZE;
   }
@@ -311,3 +333,25 @@ void ClearEmptyDirectory(int filesystem_fd, uint64_t directory_offset) {
   } while (current_node_offset != 0);
 }
 
+void StatFile(char *path, int filesystem_fd) {
+  uint64_t offset = ParsePathToFile(path, filesystem_fd);
+  if (offset != 0) {
+    struct File file;
+    read_from_filesystem(filesystem_fd, offset, &file, sizeof(file));
+    printf("Size of file: %ld\n", file.size);
+  }
+}
+
+void OpenFile(char *path, int filesystem_fd, struct FileDescriptor **list) {
+  uint64_t offset = ParsePathToFile(path, filesystem_fd);
+  if (offset != 0) {
+    int index = AddFileDescriptorToList(list, offset, filesystem_fd);
+    if (index != -1) {
+      printf("File descriptor: %d\n", index);
+    }
+  }
+}
+
+void CloseFD(char *fd, int filesystem_fd, struct FileDescriptor *list) {
+  // TODO:
+}

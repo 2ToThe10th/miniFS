@@ -10,11 +10,12 @@
 
 /**
  *
- * @param path
+ * @param directory_path
  * @param filesystem_fd
  * @return 0 if dont exist, location otherwise
  */
-uint64_t ParsePath(char *path, int filesystem_fd);
+uint64_t ParsePathToDirectory(char *directory_path, int filesystem_fd);
+uint64_t ParsePathToFile(char *file_path, int filesystem_fd);
 
 /**
  *

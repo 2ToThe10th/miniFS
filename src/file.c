@@ -8,6 +8,8 @@
 #include "superblock.h"
 #include "util.h"
 
+void FreeAddressBlock(int filesystem_fd, uint64_t block_offset, int depth);
+
 uint64_t CreateEmptyFile(int filesystem_fd) {
   uint64_t file_place = Alloc(filesystem_fd);
   if (file_place == 0) {
@@ -20,8 +22,6 @@ uint64_t CreateEmptyFile(int filesystem_fd) {
   write_to_filesystem(filesystem_fd, file_place, &empty_file, sizeof(empty_file));
   return file_place;
 }
-
-void FreeAddressBlock(int filesystem_fd, uint64_t block_offset, int depth);
 
 void RemoveFile(int filesystem_fd, uint64_t file_location) {
   struct File file;
