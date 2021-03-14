@@ -43,7 +43,6 @@ uint64_t ParsePath(char *path, int filesystem_fd, char* type) {
 uint64_t ParsePathCheckTypeWrapper(char *path, int filesystem_fd, char expected_type) {
   char type;
   uint64_t offset = ParsePath(path, filesystem_fd, &type);
-  printf("%ld\n", offset);
   if (offset == 0) {
     return 0;
   }

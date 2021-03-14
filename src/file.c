@@ -96,7 +96,6 @@ int AllocPlaceForFile(int filesystem_fd, struct File *file, uint64_t to_alloc) {
   uint64_t future_size = file->size + to_alloc;
   uint64_t need_block_num = GetBlockDataIn(future_size);
   uint64_t current_block_num = GetBlockDataIn(file->size);
-  printf("%ld of %ld\n", current_block_num, need_block_num);
   if (current_block_num < NUMBER_OF_BLOCK_WITH_DATA_IN_FILE) {
     uint64_t alloc_block_to = Min(NUMBER_OF_BLOCK_WITH_DATA_IN_FILE, need_block_num);
     for (; current_block_num < alloc_block_to; ++current_block_num) {
@@ -195,7 +194,6 @@ uint64_t AllocPlaceInBlockBlock(uint64_t already_alloc,
 void WriteToFile(int filesystem_fd, struct File *file, uint64_t position, uint64_t size, char *buffer) {
   while (size > 0) {
     uint64_t block_offset = GetBlockOffsetByIndex(position / BLOCK_SIZE, file, filesystem_fd);
-    printf("block_offset: %ld\n", block_offset); // TODO: delete
     if (block_offset == UINT64_MAX) {
       printf("Error while writing\n");
       return;
@@ -212,7 +210,6 @@ void ReadFromFile(int filesystem_fd, struct File *file, uint64_t position, uint6
   char buffer[BLOCK_SIZE];
   while (to_read > 0) {
     uint64_t block_offset = GetBlockOffsetByIndex(position / BLOCK_SIZE, file, filesystem_fd);
-    printf("block_offset: %ld\n", block_offset); // TODO: delete
     if (block_offset == UINT64_MAX) {
       printf("Error while writing\n");
       return;

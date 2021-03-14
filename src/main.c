@@ -126,8 +126,6 @@ void RunCommand(char *input_line,
     command[first_space - input_line] = '\0';
     input_line += first_space - input_line + 1;
   }
-  printf("Command:|%s|\n", command);
-  printf("left:|%s|\n", input_line);
   if (strcmp(command, "mkdir") == 0) {
     CreateNewFile(input_line, filesystem_fd, 'd');
   } else if (strcmp(command, "ls") == 0) {
@@ -223,7 +221,6 @@ int AddInfoAboutNewFile(uint64_t i_node_new_place, char *name, char type, struct
 
 void ListDirectory(char *directory_path, int filesystem_fd) {
   uint64_t directory_offset = ParsePathToDirectory(directory_path, filesystem_fd);
-  printf("%ld\n", directory_offset);  // TODO: delete
   if (directory_offset != 0) {
     printf("type | name\n");
     printf("-----|-----------------------\n");
