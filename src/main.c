@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 #include "constants.h"
 #include "init_file_system.h"
 #include "i_node_data.h"
@@ -51,7 +52,7 @@ void ClearEmptyDirectory(int filesystem_fd, uint64_t directory_offset);
 int IsNodeEmpty(struct INode *i_node);
 void StatFile(char *path, int filesystem_fd);
 void OpenFile(char *path, int filesystem_fd, struct FileDescriptor **list);
-void CloseFD(char *fd, int filesystem_fd, struct FileDescriptor *list);
+void CloseFDCommand(char *fd_string, int filesystem_fd, struct FileDescriptor *list);
 
 int main(int argc, char *argv[]) {
   if (argc < 2) {
@@ -136,6 +137,8 @@ void RunCommand(char *input_line,
     StatFile(input_line, filesystem_fd);
   } else if (strcmp(command, "open") == 0) {
     OpenFile(input_line, filesystem_fd, file_descriptor_list);
+  } else if (strcmp(command, "close") == 0) {
+    CloseFDCommand(input_line, filesystem_fd, *file_descriptor_list);
   } else {
     printf("No such command\n");
   }
@@ -347,11 +350,25 @@ void OpenFile(char *path, int filesystem_fd, struct FileDescriptor **list) {
   if (offset != 0) {
     int index = AddFileDescriptorToList(list, offset, filesystem_fd);
     if (index != -1) {
-      printf("File descriptor: %d\n", index);
+      printf("File descriptor: %d\n", index + 1);
     }
   }
 }
 
-void CloseFD(char *fd, int filesystem_fd, struct FileDescriptor *list) {
-  // TODO:
+void CloseFDCommand(char *fd_string, int filesystem_fd, struct FileDescriptor *list) {
+  unsigned fd_index = strtoul(fd_string, NULL, 10);
+  if (fd_index == 0) {
+    printf("Not a number\n");
+    return;
+  }
+  if (errno == ERANGE) {
+    printf("Too big for fd_index index\n");
+    return;
+  }
+  struct FileDescriptor* fd = GetFileDescriptorByIndex(list, fd_index);
+  if (fd == NULL || fd->file_offset == 0) {
+    printf("fd with this number dont exist\n");
+    return;
+  }
+  CloseFileDescriptor(fd, filesystem_fd);
 }

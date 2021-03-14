@@ -70,6 +70,10 @@ void ClearListRecursive(struct FileDescriptor *current, int filesystem_fd) {
 }
 
 void CloseFileDescriptor(struct FileDescriptor *fd, int filesystem_fd) {
+  if (fd->file_offset == 0) {
+    printf("Incorrect descriptor\n");
+    return;
+  }
   struct File file;
   read_from_filesystem(filesystem_fd, fd->file_offset, &file, sizeof(file));
   file.file_descriptors_number -= 1;
@@ -78,8 +82,9 @@ void CloseFileDescriptor(struct FileDescriptor *fd, int filesystem_fd) {
   fd->current_position = 0;
 }
 
-struct FileDescriptor *GetFileDescriptorByIndex(struct FileDescriptor *head, int index) {
-  for (int i = 0; i < index; ++i) {
+struct FileDescriptor *GetFileDescriptorByIndex(struct FileDescriptor *head, unsigned index) {
+  // index from 1
+  for (int i = 1; i < index; ++i) {
     if (head == NULL) {
       return NULL;
     } else {

@@ -22,6 +22,6 @@ void ClearListOfFileDescriptor(struct FileDescriptor *head, int filesystem_fd);
 
 void CloseFileDescriptor(struct FileDescriptor *fd, int filesystem_fd);
 
-struct FileDescriptor* GetFileDescriptorByIndex(struct FileDescriptor* head, int index);
+struct FileDescriptor* GetFileDescriptorByIndex(struct FileDescriptor* head, unsigned index);
 
 #endif //MINIFS_SRC_FILE_DESCRIPTOR_H_
