@@ -25,4 +25,16 @@ uint64_t CreateEmptyFile(int filesystem_fd);
 
 void RemoveFile(int filesystem_fd, uint64_t file_location);
 
+/**
+ *
+ * @param filesystem_fd
+ * @param file
+ * @param to_alloc
+ * @return 0 if Ok, -1 otherwise
+ */
+int AllocPlaceForFile(int filesystem_fd, struct File* file, uint64_t to_alloc);
+
+void WriteToFile(int filesystem_fd, struct File* file, uint64_t position, uint64_t size, char* buffer);
+void ReadFromFile(int filesystem_fd, struct File* file, uint64_t position, uint64_t to_read);
+
 #endif //MINIFS_SRC_FILE_H_

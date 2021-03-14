@@ -30,7 +30,7 @@ uint64_t ParsePath(char *path, int filesystem_fd, char* type) {
     struct INodeData i_node_data;
     int result = FindInDirectory(current_position_in_path, filesystem_fd, offset, &i_node_data, NULL);
     if (result == -1) {
-      printf("No such file: %s\n", current_position_in_path);
+      printf("No such file: \"%s\"\n", current_position_in_path);
       return 0;
     }
     offset = i_node_data.location;
@@ -43,6 +43,7 @@ uint64_t ParsePath(char *path, int filesystem_fd, char* type) {
 uint64_t ParsePathCheckTypeWrapper(char *path, int filesystem_fd, char expected_type) {
   char type;
   uint64_t offset = ParsePath(path, filesystem_fd, &type);
+  printf("%ld\n", offset);
   if (offset == 0) {
     return 0;
   }

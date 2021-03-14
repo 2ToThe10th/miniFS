@@ -53,6 +53,9 @@ int IsNodeEmpty(struct INode *i_node);
 void StatFile(char *path, int filesystem_fd);
 void OpenFile(char *path, int filesystem_fd, struct FileDescriptor **list);
 void CloseFDCommand(char *fd_string, int filesystem_fd, struct FileDescriptor *list);
+void WriteCommand(char *input_text, int filesystem_fd, struct FileDescriptor *list);
+void WritelnCommand(char *input_text, int filesystem_fd, struct FileDescriptor *list);
+void ReadCommand(char *input_text, int filesystem_fd, struct FileDescriptor *list);
 
 int main(int argc, char *argv[]) {
   if (argc < 2) {
@@ -139,6 +142,12 @@ void RunCommand(char *input_line,
     OpenFile(input_line, filesystem_fd, file_descriptor_list);
   } else if (strcmp(command, "close") == 0) {
     CloseFDCommand(input_line, filesystem_fd, *file_descriptor_list);
+  } else if (strcmp(command, "write") == 0) {
+    WriteCommand(input_line, filesystem_fd, *file_descriptor_list);
+  } else if (strcmp(command, "writeln") == 0) {
+    WritelnCommand(input_line, filesystem_fd, *file_descriptor_list);
+  } else if (strcmp(command, "read") == 0) {
+    ReadCommand(input_line, filesystem_fd, *file_descriptor_list);
   } else {
     printf("No such command\n");
   }
@@ -365,10 +374,94 @@ void CloseFDCommand(char *fd_string, int filesystem_fd, struct FileDescriptor *l
     printf("Too big for fd_index index\n");
     return;
   }
-  struct FileDescriptor* fd = GetFileDescriptorByIndex(list, fd_index);
+  struct FileDescriptor *fd = GetFileDescriptorByIndex(list, fd_index);
   if (fd == NULL || fd->file_offset == 0) {
     printf("fd with this number dont exist\n");
     return;
   }
   CloseFileDescriptor(fd, filesystem_fd);
+}
+
+void WriteCommand(char *input_text, int filesystem_fd, struct FileDescriptor *list) {
+  char *text_to_write;
+  unsigned fd_index = strtoul(input_text, &text_to_write, 10);
+  if (fd_index == 0) {
+    printf("FD not a number\n");
+    return;
+  }
+  if (errno == ERANGE) {
+    printf("Too big for fd_index index\n");
+    return;
+  }
+  struct FileDescriptor *fd = GetFileDescriptorByIndex(list, fd_index);
+  if (fd == NULL || fd->file_offset == 0) {
+    printf("fd with this number dont exist\n");
+    return;
+  }
+  if (strlen(text_to_write) != 0) {
+    text_to_write += 1;
+  }
+  uint64_t to_write = strlen(text_to_write);
+  if (to_write == 0) {
+    printf("Nothing to write\n");
+    return;
+  }
+  struct File file;
+  read_from_filesystem(filesystem_fd, fd->file_offset, &file, sizeof(struct File));
+  if (fd->current_position + to_write > file.size) {
+    if (AllocPlaceForFile(filesystem_fd, &file, (fd->current_position + to_write) - file.size) == -1) {
+      printf("Cant allocate enough memory\n");
+      return;
+    }
+  }
+  WriteToFile(filesystem_fd, &file, fd->current_position, to_write, text_to_write);
+  fd->current_position += to_write;
+  write_to_filesystem(filesystem_fd, fd->file_offset, &file, sizeof(struct File));
+}
+
+void WritelnCommand(char *input_text, int filesystem_fd, struct FileDescriptor *list) {
+  uint64_t input_text_size = strlen(input_text);
+  char *new_text = malloc(input_text_size + 2);
+  new_text[input_text_size + 1] = '\0';
+  strcpy(new_text, input_text);
+  new_text[input_text_size] = '\n';
+  WriteCommand(new_text, filesystem_fd, list);
+  free(new_text);
+}
+
+void ReadCommand(char *input_text, int filesystem_fd, struct FileDescriptor *list) {
+  char *bytes_to_read_str;
+  unsigned fd_index = strtoul(input_text, &bytes_to_read_str, 10);
+  if (fd_index == 0) {
+    printf("FD not a number\n");
+    return;
+  }
+  if (errno == ERANGE) {
+    printf("Too big for fd_index index\n");
+    return;
+  }
+  struct FileDescriptor *fd = GetFileDescriptorByIndex(list, fd_index);
+  if (fd == NULL || fd->file_offset == 0) {
+    printf("fd with this number dont exist\n");
+    return;
+  }
+  if (strlen(bytes_to_read_str) != 0) {
+    bytes_to_read_str += 1;
+  }
+  uint64_t read = strtoull(bytes_to_read_str, NULL, 10);
+  if (read == 0) {
+    printf("Number to read not a number or zero\n");
+    return;
+  }
+  struct File file;
+  read_from_filesystem(filesystem_fd, fd->file_offset, &file, sizeof(struct File));
+  if (fd->current_position + read > file.size) {
+    read = file.size - fd->current_position;
+  }
+  printf("read: %ld\n", read);
+  fflush(stdout);
+  ReadFromFile(filesystem_fd, &file, fd->current_position, read);
+  fflush(stdout);
+  fd->current_position += read;
+  printf("\n");
 }
