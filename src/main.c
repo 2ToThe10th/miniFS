@@ -56,6 +56,8 @@ void CloseFDCommand(char *fd_string, int filesystem_fd, struct FileDescriptor *l
 void WriteCommand(char *input_text, int filesystem_fd, struct FileDescriptor *list);
 void WritelnCommand(char *input_text, int filesystem_fd, struct FileDescriptor *list);
 void ReadCommand(char *input_text, int filesystem_fd, struct FileDescriptor *list);
+void SeekCommand(char *input_text, int filesystem_fd, struct FileDescriptor *list);
+void StatFDCommand(char *input_text, int filesystem_fd, struct FileDescriptor *list);
 
 int main(int argc, char *argv[]) {
   if (argc < 2) {
@@ -148,6 +150,10 @@ void RunCommand(char *input_line,
     WritelnCommand(input_line, filesystem_fd, *file_descriptor_list);
   } else if (strcmp(command, "read") == 0) {
     ReadCommand(input_line, filesystem_fd, *file_descriptor_list);
+  } else if (strcmp(command, "seek") == 0) {
+    SeekCommand(input_line, filesystem_fd, *file_descriptor_list);
+  } else if (strcmp(command, "statfd") == 0) {
+    StatFDCommand(input_line, filesystem_fd, *file_descriptor_list);
   } else {
     printf("No such command\n");
   }
@@ -464,4 +470,53 @@ void ReadCommand(char *input_text, int filesystem_fd, struct FileDescriptor *lis
   fflush(stdout);
   fd->current_position += read;
   printf("\n");
+}
+
+void SeekCommand(char *input_text, int filesystem_fd, struct FileDescriptor *list) {
+  char *bytes_to_seek_str;
+  unsigned fd_index = strtoul(input_text, &bytes_to_seek_str, 10);
+  if (fd_index == 0) {
+    printf("FD not a number\n");
+    return;
+  }
+  if (errno == ERANGE) {
+    printf("Too big for fd_index index\n");
+    return;
+  }
+  struct FileDescriptor *fd = GetFileDescriptorByIndex(list, fd_index);
+  if (fd == NULL || fd->file_offset == 0) {
+    printf("fd with this number dont exist\n");
+    return;
+  }
+  if (strlen(bytes_to_seek_str) != 0) {
+    bytes_to_seek_str += 1;
+  }
+  uint64_t seek_to = strtoull(bytes_to_seek_str, NULL, 10);
+  struct File file;
+  read_from_filesystem(filesystem_fd, fd->file_offset, &file, sizeof(struct File));
+  if (seek_to > file.size) {
+    printf("%ld more than file size %ld\n", seek_to, file.size);
+    return;
+  }
+  fd->current_position = seek_to;
+}
+
+void StatFDCommand(char *fd_string, int filesystem_fd, struct FileDescriptor *list) {
+  unsigned fd_index = strtoul(fd_string, NULL, 10);
+  if (fd_index == 0) {
+    printf("Not a number\n");
+    return;
+  }
+  if (errno == ERANGE) {
+    printf("Too big for fd_index index\n");
+    return;
+  }
+  struct FileDescriptor *fd = GetFileDescriptorByIndex(list, fd_index);
+  if (fd == NULL || fd->file_offset == 0) {
+    printf("fd with this number dont exist\n");
+    return;
+  }
+  struct File file;
+  read_from_filesystem(filesystem_fd, fd->file_offset, &file, sizeof(struct File));
+  printf("File size: %ld\n", file.size);
 }
