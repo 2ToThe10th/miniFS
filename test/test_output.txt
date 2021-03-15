@@ -1,0 +1,467 @@
+Will be used only 999424 bytes of file
+Init started
+Init ready on 5%
+Init ready on 10%
+Init ready on 15%
+Init ready on 20%
+Init ready on 25%
+Init ready on 30%
+Init ready on 35%
+Init ready on 40%
+Init ready on 45%
+Init ready on 50%
+Init ready on 55%
+Init ready on 60%
+Init ready on 65%
+Init ready on 70%
+Init ready on 75%
+Init ready on 80%
+Init finished
+Commands:
+mkdir dir_name - create a directory (for dir1/dir2/dir3 dir1/dir2 must exist and dir3 must not exist) (length of directory name must be not more than 23 symbols)
+rmdir dir_name - remove directory (directory must be empty and must exist)
+ls dir_name - watch files and dirs in directory
+touch file_name - create file (for dir1/dir2/file1 dir1/dir2 must exist and file1 must not exist)
+open file_name - return file descriptor of open file
+rm file_name - delete file with file_name (file must not have open file descriptors)
+read FD number_of_bytes - read number_of_bytes from place set in file descriptor (0 - EOF). Return number_of_read bytes and text
+write FD text - write data to file from place in FD. text cant contain \n. Return number of written bytes
+writeln FD text - as write, but add \n in the end
+seek FD new_place - change FD place to new_place. new_place might be not more than size of file (size of file use to write in the end)
+stat file_name - size of file_name
+statfd FD - stat of file in FD
+close FD - close file descriptor (need to delete files)
+Write your commands:
+
+
+miniFS> miniFS> miniFS> miniFS> type | name
+-----|-----------------------
+d    | c
+d    | a
+d    | b
+miniFS> type | name
+-----|-----------------------
+miniFS> type | name
+-----|-----------------------
+miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> type | name
+-----|-----------------------
+d    | c0
+d    | c1
+d    | c2
+d    | c3
+d    | c4
+d    | c5
+d    | c6
+d    | c7
+d    | c8
+d    | c9
+d    | c10
+d    | c11
+d    | c12
+d    | c13
+d    | c14
+d    | c15
+d    | c16
+d    | c17
+d    | c18
+d    | c19
+d    | c20
+d    | c21
+d    | c22
+d    | c23
+d    | c24
+d    | c25
+d    | c26
+d    | c27
+d    | c28
+d    | c29
+d    | c30
+d    | c31
+d    | c32
+d    | c33
+d    | c34
+d    | c35
+d    | c36
+d    | c37
+d    | c38
+d    | c39
+d    | c40
+d    | c41
+d    | c42
+d    | c43
+d    | c44
+d    | c45
+d    | c46
+d    | c47
+d    | c48
+d    | c49
+d    | c50
+d    | c51
+d    | c52
+d    | c53
+d    | c54
+d    | c55
+d    | c56
+d    | c57
+d    | c58
+d    | c59
+d    | c60
+d    | c61
+d    | c62
+d    | c63
+d    | c64
+d    | c65
+d    | c66
+d    | c67
+d    | c68
+d    | c69
+d    | c70
+d    | c71
+d    | c72
+d    | c73
+d    | c74
+d    | c75
+d    | c76
+d    | c77
+d    | c78
+d    | c79
+d    | c80
+d    | c81
+d    | c82
+d    | c83
+d    | c84
+d    | c85
+d    | c86
+d    | c87
+d    | c88
+d    | c89
+d    | c90
+d    | c91
+d    | c92
+d    | c93
+d    | c94
+d    | c95
+d    | c96
+d    | c97
+d    | c98
+d    | c99
+d    | c100
+d    | c101
+d    | c102
+d    | c103
+d    | c104
+d    | c105
+d    | c106
+d    | c107
+d    | c108
+d    | c109
+d    | c110
+d    | c111
+d    | c112
+d    | c113
+d    | c114
+d    | c115
+d    | c116
+d    | c117
+d    | c118
+d    | c119
+d    | c120
+d    | c121
+d    | c122
+d    | c123
+d    | c124
+d    | c125
+d    | c126
+d    | c127
+d    | c128
+d    | c129
+d    | c130
+d    | c131
+d    | c132
+d    | c133
+d    | c134
+d    | c135
+d    | c136
+d    | c137
+d    | c138
+d    | c139
+d    | c140
+d    | c141
+d    | c142
+d    | c143
+d    | c144
+d    | c145
+d    | c146
+d    | c147
+d    | c148
+d    | c149
+d    | c150
+miniFS> miniFS> type | name
+-----|-----------------------
+f    | file
+miniFS> found file type f, expected type: d
+miniFS> Incorrect file_type of removed f, might be d
+miniFS> miniFS> File descriptor: 1
+miniFS> miniFS> miniFS> read: 5
+Hello
+miniFS> read: 7
+ World
+
+miniFS> Size of file: 12
+miniFS> fd with this number dont exist
+miniFS> No such file: "122"
+miniFS> Close all file descriptors (1) before
+miniFS> File descriptor: 2
+miniFS> miniFS> Close all file descriptors (1) before
+miniFS> miniFS> miniFS> File descriptor: 1
+miniFS> read: 6000
+Hello World
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+miniFS> read: 6000
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+miniFS> read: 12
+aaaaaaaaaaaa
+miniFS> File size: 12012
+miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> miniFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> Place finishedminiFS> type | name
+-----|-----------------------
+d    | c0
+d    | c1
+d    | c2
+d    | c3
+d    | c4
+d    | c5
+d    | c6
+d    | c7
+d    | c8
+d    | c9
+d    | c10
+d    | c11
+d    | c12
+d    | c13
+d    | c14
+d    | c15
+d    | c16
+d    | c17
+d    | c18
+d    | c19
+d    | c20
+d    | c21
+d    | c22
+d    | c23
+d    | c24
+d    | c25
+d    | c26
+d    | c27
+d    | c28
+d    | c29
+d    | c30
+d    | c31
+d    | c32
+d    | c33
+d    | c34
+d    | c35
+d    | c36
+d    | c37
+d    | c38
+d    | c39
+d    | c40
+d    | c41
+d    | c42
+d    | c43
+d    | c44
+d    | c45
+d    | c46
+d    | c47
+d    | c48
+d    | c49
+d    | c50
+d    | c51
+d    | c52
+d    | c53
+d    | c54
+d    | c55
+d    | c56
+d    | c57
+d    | c58
+d    | c59
+d    | c60
+d    | c61
+d    | c62
+d    | c63
+d    | c64
+d    | c65
+d    | c66
+d    | c67
+d    | c68
+d    | c69
+d    | c70
+d    | c71
+d    | c72
+d    | c73
+d    | c74
+d    | c75
+d    | c76
+d    | c77
+d    | c78
+d    | c79
+d    | c80
+d    | c81
+d    | c82
+d    | c83
+d    | c84
+d    | c85
+d    | c86
+d    | c87
+d    | c88
+d    | c89
+d    | c90
+d    | c91
+d    | c92
+d    | c93
+d    | c94
+d    | c95
+d    | c96
+d    | c97
+d    | c98
+d    | c99
+d    | c100
+d    | c101
+d    | c102
+d    | c103
+d    | c104
+d    | c105
+d    | c106
+d    | c107
+d    | c108
+d    | c109
+d    | c110
+d    | c111
+d    | c112
+d    | c113
+d    | c114
+d    | c115
+d    | c116
+d    | c117
+d    | c118
+d    | c119
+d    | c120
+d    | c121
+d    | c122
+d    | c151
+d    | c124
+d    | c125
+d    | c126
+d    | c127
+d    | c128
+d    | c129
+d    | c130
+d    | c131
+d    | c132
+d    | c133
+d    | c134
+d    | c135
+d    | c136
+d    | c137
+d    | c138
+d    | c139
+d    | c140
+d    | c141
+d    | c142
+d    | c143
+d    | c144
+d    | c145
+d    | c146
+d    | c147
+d    | c148
+d    | c149
+d    | c150
+d    | c152
+d    | c153
+d    | c154
+d    | c155
+d    | c156
+d    | c157
+d    | c158
+d    | c159
+d    | c160
+d    | c161
+d    | c162
+d    | c163
+d    | c164
+d    | c165
+d    | c166
+d    | c167
+d    | c168
+d    | c169
+d    | c170
+d    | c171
+d    | c172
+d    | c173
+d    | c174
+d    | c175
+d    | c176
+d    | c177
+d    | c178
+d    | c179
+d    | c180
+d    | c181
+d    | c182
+d    | c183
+d    | c184
+d    | c185
+d    | c186
+d    | c187
+d    | c188
+d    | c189
+d    | c190
+d    | c191
+d    | c192
+d    | c193
+d    | c194
+d    | c195
+d    | c196
+d    | c197
+d    | c198
+d    | c199
+d    | c200
+d    | c201
+d    | c202
+d    | c203
+d    | c204
+d    | c205
+d    | c206
+d    | c207
+d    | c208
+d    | c209
+d    | c210
+d    | c211
+d    | c212
+d    | c213
+d    | c214
+d    | c215
+d    | c216
+d    | c217
+d    | c218
+d    | c219
+d    | c220
+d    | c221
+d    | c222
+d    | c223
+d    | c224
+d    | c225
+d    | c226
+d    | c227
+d    | c228
+d    | c229
+d    | c230
+d    | c231
+d    | c232
+d    | c233
+d    | c234
+d    | c235
+d    | c236
+d    | c237
+d    | c238
+miniFS> Incorrect file_type of removed d, might be f
+miniFS> miniFS> File already exist
+miniFS> miniFS> Place finishedminiFS>

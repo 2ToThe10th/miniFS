@@ -14,6 +14,9 @@ script:
   - cd cmake-build
   - cmake ../ -DCLIENT=1
   - make
+  - touch filesystem
+  - truncate filesystem --size 1000000
+  - ./miniFS filesystem init <../test/test_input.txt | cmp ../test/test_output.txt
 
 notifications:
   email:

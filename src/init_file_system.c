@@ -21,7 +21,7 @@ void InitFileSystem(int filesystem_fd, uint64_t filesystem_size) {
   struct INode root_i_node;
   memset(&root_i_node, 0, sizeof(struct INode));
   write_to_filesystem(filesystem_fd, BLOCK_SIZE, &root_i_node, sizeof(struct INode));
-  uint64_t percent_of_init = filesystem_size / (BLOCK_SIZE * 100);
+  uint64_t percent_of_init = filesystem_size / (BLOCK_SIZE * 100) + 1;
   for (uint64_t i = 2; i < filesystem_size / BLOCK_SIZE - 1; ++i) {
     uint64_t next_empty_block = (i + 1) * BLOCK_SIZE;
     write_to_filesystem(filesystem_fd, i * BLOCK_SIZE, &next_empty_block, sizeof(next_empty_block));
@@ -30,6 +30,7 @@ void InitFileSystem(int filesystem_fd, uint64_t filesystem_size) {
       fflush(stdout);
     }
   }
+  printf("Init finished\n");
   uint64_t last_block = PLACE_FINISHED;
   write_to_filesystem(filesystem_fd, (filesystem_size / BLOCK_SIZE - 1) * BLOCK_SIZE, &last_block, sizeof(last_block));
 }
