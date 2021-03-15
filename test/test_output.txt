@@ -464,4 +464,4 @@ d    | c237
 d    | c238
 miniFS> Incorrect file_type of removed d, might be f
 miniFS> miniFS> File already exist
-miniFS> miniFS> Place finishedminiFS>
+miniFS> miniFS> Place finishedminiFS> 
