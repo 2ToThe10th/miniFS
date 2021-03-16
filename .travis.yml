@@ -12,7 +12,7 @@ compiler:
 script:
   - mkdir cmake-build
   - cd cmake-build
-  - cmake ../ -DCLIENT=1
+  - cmake ../
   - make
   - touch filesystem
   - truncate filesystem --size 1000000
